@@ -41,9 +41,49 @@
            </iframe>
        </div></div>-->
 
+<!-- Normal Youtube Player 
 <iframe id="ytplayer" type="text/html" width="400" height="200"
 	src="https://www.youtube.com/embed/{{ yid }}?autoplay=1"
 	frameborder="0"></iframe>
+-->
+
+<div id="player"></div>
+
+<script src="http://www.youtube.com/player_api"></script>
+
+<script>
+    
+    // create youtube player
+    var player;
+    function onYouTubePlayerAPIReady() {
+        player = new YT.Player('player', {
+          height: '200',
+          width: '400',
+          videoId: '{{ yid }}',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+    }
+
+    // autoplay video
+    function onPlayerReady(event) {
+        event.target.playVideo();
+    }
+
+    // when video ends
+    function onPlayerStateChange(event) {        
+        if(event.data === 0) {            
+            //alert('done');
+            document.getElementById('form1').submit();
+        }
+    }
+    
+</script>
+
+
+
 
 
 <!--<span id="loading_txt"><small><i>Loading media... </i></small></span>-->

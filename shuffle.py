@@ -80,7 +80,7 @@ def get_image():
 def get_random_music(style):
     # Pagination Request
     url = 'https://api.discogs.com/database/search?style='+style
-    headers = {'Authorization':'Discogs token= <YOUR_DISCOGS_API-TOKEN> '}
+    headers = {'Authorization':'Discogs token=' <YOUR_DISCOGS_API_TOKEN>}
     r = requests.get(url, headers=headers)
     try:
         data = json.loads(r.text)
@@ -150,7 +150,7 @@ def get_random_music(style):
 
 # Get Youtube Video ID and Title
 def get_youtube_id(query):
-    token = ' <YOUR_GOOGLE_API_TOKEN> '
+    token = ''<YOUR_GOOGLE_YOUTUBE_API_TOKEN>
     url = ('''https://www.googleapis.com/youtube/v3/search?
            maxResults=50&part=snippet&key='''
            +token+'&q='
