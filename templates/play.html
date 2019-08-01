@@ -1,0 +1,81 @@
+{% extends "index.html" %}
+
+{% block info %}
+
+<p>
+  <table>
+    <tr>
+      <th><img src="{{ thumb }}"/></th>
+      <th align="left">
+	<small>
+	  Artist: {{ artist }}<p>
+	    Album: {{ album_name }}<p>
+	    Style: {{ album_style }}<p>
+	    Year: {{ year }}, {{ country }}
+	</small>
+      </th>
+    </tr>
+  </table>
+</p>
+
+{% endblock info %}
+
+
+
+{% block media %}
+<p id="track_title">
+  <small><i>Now playing:
+      <a target="_blank" rel="noopener noreferrer"
+	 href="https://www.youtube.com/watch?v={{ yid }}">
+	{{ ytitle }}
+    </a></i>
+  </small>
+</p>
+
+<!-- Minimal Youtube Player 
+     <p>
+       <div style="position:relative;width:267px;height:25px;overflow:hidden;">
+         <div style="position:absolute;top:-276px;left:-5px">
+           <iframe id="ik_player_iframe" frameborder="0" width="390" height="305" 
+		   src="https://www.youtube.com/embed/<change>?rel=0&autoplay=1&loop=1&enablejsapi=1">
+           </iframe>
+       </div></div>-->
+
+<iframe id="ytplayer" type="text/html" width="400" height="200"
+	src="https://www.youtube.com/embed/{{ yid }}?autoplay=1"
+	frameborder="0"></iframe>
+
+
+<!--<span id="loading_txt"><small><i>Loading media... </i></small></span>-->
+
+<p>
+  <!-- DMCA contact youtube2mp3api.com 
+       <audio id="mp3player" controls="controls" 
+	      style="width:300px;height:25px;"
+	      preload="none"
+	      onended="document.getElementById('form1').submit();">
+	 <source src={{mp3}} type="audio/mpeg" />
+       </audio>
+
+       <img src="image?src=reload.png" onclick="document.getElementById('mp3player').load();">
+</p>
+-->
+
+  <script>
+    var t=document.getElementById("track_title");
+    var l=document.getElementById("loading_txt");
+    var p=document.getElementById("mp3player");
+
+    t.style.visibility = "hidden";
+    l.style.display = "block";
+    p.style.visibility = "hidden";
+
+    setTimeout(function(){
+    t.style.visibility = "visible";
+    l.style.display = "none";
+    p.style.visibility = "visible";
+    p.load(); p.play();
+    },3500);
+  </script>
+
+  {% endblock media%}

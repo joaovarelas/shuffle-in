@@ -1,0 +1,32 @@
+{% extends "play.html" %}
+
+{% block info %}
+  {% if not style %}
+    <p id="error_txt">
+       <small><i>Error loading media</i></small>
+    </p>
+    <script>
+      setTimeout(function(){
+          document.getElementById('form1').submit();
+      },5000);
+    </script>
+    
+  {% else %}
+    {{ super() }}
+  {% endif %}				      
+{% endblock info %}
+
+
+{% block media %}
+  {% if style %}
+    <p id="error_txt">
+      <small><i>Error loading media</i></small>
+    </p>
+    <script>
+      setTimeout(function(){
+          document.getElementById('form1').submit();
+      },5000);
+    </script>
+  {% endif %}
+{% endblock media  %}
+
