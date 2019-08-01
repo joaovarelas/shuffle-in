@@ -10,6 +10,11 @@ More than 10 Million of discography available, according to Discogs.
 
 # Install & Run
 
+Generate your API tokens at Discogs and Google (Youtube) and edit them
+at `shuffle.py` file.
+
+
+
 `$ python -m pip install --user Flask`
 
 `$ git clone https://github.com/joaovarelas/shuffle-in`
