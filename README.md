@@ -1,7 +1,7 @@
 # shuffle-in
 Webapp to shuffle between random musics of different styles.
 
-Using Python Flask 1.0.2 with Jinja2 templates support and several API's.
+Using Python Flask 1.1.1 with Jinja2 templates support and several API's.
 
 More than 10 Million of discography available, according to Discogs.
 
