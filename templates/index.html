@@ -1,60 +1,65 @@
 <!DOCTYPE html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:url" content="http://shuffle.joe.dj/play" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Shuffle.in ~ Music Discovery" />
-  <meta property="og:description" content="Listen to random music. More than 10 million of discography available!" />
-  <meta property="og:image" content="http://shuffle.joe.dj/image?src=logo.png" />
-  <title>shuffle.in - music discovery</title>
-  <link rel="shortcut icon" href="image?src=favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  <style>
-    html{
-    background: linear-gradient( to left top, #{{ bgcolor }},
-    #{{ bgcolor[::-1] }});
-    }
-  </style>
-  
-</head>
+<html lang="en">
+    <head>
+        <title>shuffle</title>
+        <style>
+         html {
+             background: repeating-linear-gradient( to left top,
+             #{{ bgcolor }},
+             #{{ bgcolor[::-1] }});
+             height: 100%;
+             -webkit-background-size: cover;
+             -moz-background-size: cover;
+             -o-background-size: cover;
+             background-size: cover;
+             background: #70bg32;
+             background-repeat: repeat;
+             background-attachment:scroll;
+         }
+         
+         body { font-family:'Courier New'; }
+         
+         .vertical-center {
+             margin: 0;
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             -ms-transform: translate(-50%, -50%);
+             transform: translate(-50%, -50%);
+         }
 
-<body>
-  {% block select %}
-  <center>
-    <h1><font face="Verdana">shuffle.in</font></h1>
-    <form id="form1" action="/play" method="POST">
-      Listen to
-      <select name="style" onchange="this.form.submit();">
-	<option selected value="any">some</option>
-	{% for s in styles %}
-	{% if s == style %} <option selected>{{ s }}</option>
-	{% else %} <option>{{ s }}</option> {% endif %}
-	{% endfor %}
-      </select>
-      music
-      <input id="shuffle_btn"
-	     {% if style %} type="submit" {% else %} type="hidden" {% endif %}
-	     name="&#x1F500;" value="&#x1F500;">
-    </form>
-    {% endblock select %}
-    
-    {% block info %} {% endblock info %}
-    {% block media %} {% endblock media%}
-    
-    
-    {% block footer %}
-    
-    <div class="footer">
-      <img src="image?src=logo.png"  style="display: none;" />
-      <img src="image?src=git.png" width="20" height="20"> 
-      <a target="_blank" rel="noopener noreferrer" 
-	 href="https://github.com/joaovarelas">
-	@joaovarelas
-      </a>
-    </div>
-    {% endblock %}
-    
-  </center>
-</body>
+         h1 {
+             font: italic bold 50px Verdana;
+             color: white;
+         }
+
+         td {
+             vertical-align: top;
+             text-align: left;
+         }
+        </style>
+    </head>
+    <body>
+        <center>
+            <div>
+                <h1><font face="Verdana">shuffle</font></h1>
+                <br>
+                <form action="/search" method="POST">
+                    <input type="text" name="query" value="{{ query }}"
+                           placeholder="Track or artist name...">
+                    
+                    {% include "styles.html" %}
+
+                    <input type="checkbox" name="shuffle" {% if shuffle %}checked{% endif %}>
+                    Shuffle
+                    <input type="submit" value="Search">
+                </form>
+
+                <br>
+                
+                {% block content %}{% endblock %}
+                
+            </div>
+        </center>
+    </body>
 </html>
-

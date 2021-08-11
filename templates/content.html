@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% block content %}
+<table>
+    {% for release in releases["results"] %}
+    <tr>
+        <td><img src="{{ release["thumb"] }}" height="200px"></td>
+        <td>
+            <b>{{ release["title"] }}</b>
+            <br>
+            {{ release["genre"][0] }} {{ release["style"][0] }}
+            <br>
+            {{ release["label"][0] }}
+            <br>
+            {{ release["country"] }} {{ release["year"] }}
+        </td>
+        
+        <td>
+            <center><b>Tracks</b></center>
+            <br>
+            <ul>
+                {% for track in tracklists[release["id"]]["tracklist"] %}
+                <li>
+                    {{ track["title"] }}
+                    <br>
+                    <iframe
+                        src="https://www.youtube.com/embed/{{ track["youtube_id"] }}?autoplay=0"
+                        height="50px">
+                    </iframe>
+                </li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>      
+    {% endfor %}
+</table>
+{% endblock %}
