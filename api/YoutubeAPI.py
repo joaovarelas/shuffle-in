@@ -3,8 +3,9 @@ import json
 import threading
 from youtubesearchpython import VideosSearch
 
+
 class Youtube:
-    
+
     def __init__(self, token):
         self.url = "https://youtube.googleapis.com/"
         self.token = token
@@ -14,47 +15,46 @@ class Youtube:
         return json.loads(req.text)
 
     def search(self, query):
-        params = "youtube/v3/search?maxResults=1&key={}&q={}".format(self.token, query)
+        params = "youtube/v3/search?maxResults=1&key={}&q={}".format(
+            self.token, query)
         resp = self.request(params)
         return resp
 
-    
     async_video_list = None
+
     def get_videos(self, tracklists):
         for release in tracklists.values():
             tracklist = release["tracklist"]
-            
+
             self.async_video_list = [None]*len(tracklist)
             threads = []
-            
+
             for i in range(len(tracklist)):
                 track = tracklist[i]
                 query = "{} {} {}".format(track["title"],
                                           release["artists_sort"],
                                           release["title"])
-                                          
 
-                t = threading.Thread(target=self.get_videos_async, args=(query, i,))
+                t = threading.Thread(
+                    target=self.get_videos_async, args=(query, i,))
                 threads.append(t)
-              
+
             [t.start() for t in threads]
             [t.join() for t in threads]
 
             for i in range(len(tracklist)):
                 tracklist[i]["youtube_id"] = self.async_video_list[i]
-                        
+
         return tracklists
-    
 
     def get_videos_async(self, query, i):
         print(query)
-        video_search = VideosSearch(query, limit = 1).result()
+        video_search = VideosSearch(query, limit=1).result()
         if video_search["result"]:
             self.async_video_list[i] = video_search["result"][0]["id"]
 
         return
 
-    
     '''
     # Sync
     def get_videos(self, tracklists):
@@ -67,7 +67,7 @@ class Youtube:
                 
         return tracklists
     '''
-                         
+
     '''
     # Youtube V3 API (exceed quota)
     def get_videos(self, tracklists):
@@ -82,5 +82,3 @@ class Youtube:
 
         return tracklists
     '''
-        
-

@@ -7,7 +7,7 @@ import random
 
 from api.DiscogsAPI import Discogs
 from api.YoutubeAPI import Youtube
-#from SoundcloudAPI import Soundcloud
+# from SoundcloudAPI import Soundcloud
 
 load_dotenv()
 
@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 discogs = Discogs(getenv("DISCOGS_TOKEN"))
 youtube = Youtube(getenv("YOUTUBE_TOKEN"))
-#soundcloud ...
+# soundcloud ...
 
 
 @app.route("/")
@@ -36,16 +36,19 @@ def search():
     query = "" if not query else query
     style = "" if not style else style
     shuffle = False if not shuffle else True
-    
+
+    if not shuffle and not query:
+        return redirect("/", code=302)
+
     enc_query = urllib.parse.quote(query.encode('utf-8'))
     enc_style = urllib.parse.quote(style.encode('utf-8'))
-    
+
     releases = discogs.search(enc_query, enc_style, shuffle)
     tracklists = discogs.get_tracklists(releases)
 
     # Set youtube video id for each track
     tracklists = youtube.get_videos(tracklists)
-    
+
     return render_template("content.html",
                            query=html.escape(query), style=html.escape(style),
                            shuffle=shuffle, bgcolor=rand_color(),
